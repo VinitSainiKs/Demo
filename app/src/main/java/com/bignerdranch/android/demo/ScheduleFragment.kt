@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bignerdranch.android.demo.ViewModel.DailyScheduleResponseViewModel
+import androidx.lifecycle.observe
+import com.bignerdranch.android.demo.viewModel.DailyScheduleResponseViewModel
 import com.bignerdranch.android.demo.databinding.FragmentDailyScheduleBinding
 
 class ScheduleFragment : Fragment() {
@@ -17,7 +18,9 @@ class ScheduleFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        println("asdfasdff --->> ${viewModel.dailySchedule}")
+        viewModel.dailySchedule.observe(viewLifecycleOwner){
+            println("faculty daily Schedule: $it")
+        }
 
         return binding.root
     }
