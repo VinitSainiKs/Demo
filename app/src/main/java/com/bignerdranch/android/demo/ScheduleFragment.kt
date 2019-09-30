@@ -18,10 +18,9 @@ class ScheduleFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.dailySchedule.observe(viewLifecycleOwner){
-            println("faculty daily Schedule: $it")
+        viewModel.dailySchedule.observe(viewLifecycleOwner) {
+            println("test --->> $it")
         }
-
         return binding.root
     }
 }

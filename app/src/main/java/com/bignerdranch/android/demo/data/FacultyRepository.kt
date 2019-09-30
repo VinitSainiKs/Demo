@@ -17,8 +17,8 @@ class FacultyRepository(private val facultyDao: FacultyDao, private val currentS
 
     val client = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
-        .readTimeout(10, TimeUnit.SECONDS)
-        .writeTimeout(10,TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30,TimeUnit.SECONDS)
         .build()
 
     val facultyApi = Retrofit.Builder()
@@ -27,24 +27,23 @@ class FacultyRepository(private val facultyDao: FacultyDao, private val currentS
         .addConverterFactory(GsonConverterFactory.create())
         .build().create(FacultyAPI::class.java)
 
-    fun getDailySchedule(contactId: String?, schoolId: String): LiveData<List<DailyScheduleResponseModel>>{
+    fun getDailySchedule(contactId: String, schoolId: String): LiveData<List<DailyScheduleResponseModel>>{
         currentScope.launch { getDailyScheduleFromNetwork(contactId, schoolId) }
         return facultyDao.getDailySchedule()
     }
 
-    private suspend fun getDailyScheduleFromNetwork(contactId: String?, schoolId: String) {
+    private suspend fun getDailyScheduleFromNetwork(contactId: String, schoolId: String) {
         try {
-            if (contactId != null){
                 facultyApi.getDalySchedule(contactId, schoolId).body().let {
+                    println("Data From DailyScheduleFromNetwork : $it")
                     if (it!!.isNotEmpty()){
-                        facultyDao.getDailySchedule()
+                        facultyDao.insertFacultySchedule(it)
                     }
                 }
-            }
+
         }catch (e: Exception){
             e.printStackTrace()
         }
     }
-
 
 }

@@ -4,6 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="list"
+            type="java.util.List&lt;com.bignerdranch.android.demo.responseModel.DailyScheduleResponseModel>" />
+        <variable
+            name="position"
+            type="Integer" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,6 +39,7 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
                     tools:text="Subject"
+                    android:text="@{list[position].subject}"
                     android:paddingLeft="12dp"
                     android:textSize="18sp"
                     android:textColor="#000"/>
@@ -42,6 +51,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     tools:text="10:00 AM"
+                    android:text="@{list[position].start_time}"
                     android:gravity="center"
                     android:textSize="18sp"/>
 
