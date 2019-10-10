@@ -34,9 +34,9 @@ class FacultyRepository(private val facultyDao: FacultyDao, private val currentS
 
     private suspend fun getDailyScheduleFromNetwork(contactId: String, schoolId: String) {
         try {
-                facultyApi.getDalySchedule(contactId, schoolId).body().let {
+                facultyApi.getDalySchedule(contactId, schoolId).body()?.let {
                     println("Data From DailyScheduleFromNetwork : $it")
-                    if (it!!.isNotEmpty()){
+                    if (it.isNotEmpty()){
                         facultyDao.insertFacultySchedule(it)
                     }
                 }
