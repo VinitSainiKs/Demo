@@ -7,13 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bignerdranch.android.demo.responseModel.DailyScheduleResponseModel
+import com.bignerdranch.android.demo.responseModel.DashboardValueModel
+import com.bignerdranch.android.demo.responseModel.UserProfileValueModel
 import com.bignerdranch.android.demo.utilities.DatabaseConverters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.internal.Internal.instance
 
-@Database(entities = [DailyScheduleResponseModel::class], version = 1)
+@Database(entities = [DailyScheduleResponseModel::class, DashboardValueModel::class, UserProfileValueModel::class], version = 1)
 //@TypeConverters(DatabaseConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 

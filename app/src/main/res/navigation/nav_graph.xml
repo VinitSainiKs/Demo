@@ -5,6 +5,10 @@
 
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="com.bignerdranch.android.demo.ScheduleFragment"
+        android:name="com.bignerdranch.android.demo.ui.ScheduleFragment"
         android:label="ScheduleFragment" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.bignerdranch.android.demo.ui.DashboardFragment"
+        android:label="DashboardFragment" />
 </navigation>

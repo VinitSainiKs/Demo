@@ -1,4 +1,4 @@
-package com.bignerdranch.android.demo
+package com.bignerdranch.android.demo.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,10 @@ import com.bignerdranch.android.demo.databinding.FragmentDailyScheduleBinding
 
 class ScheduleFragment : Fragment() {
 
+    val viewModel : DailyScheduleResponseViewModel by viewModels()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentDailyScheduleBinding.inflate(inflater, container, false)
-        val viewModel : DailyScheduleResponseViewModel by viewModels()
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 

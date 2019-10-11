@@ -2,15 +2,13 @@ package com.bignerdranch.android.demo.data
 
 import androidx.lifecycle.LiveData
 import com.bignerdranch.android.demo.responseModel.DailyScheduleResponseModel
+import com.bignerdranch.android.demo.responseModel.DashboardValueModel
+import com.bignerdranch.android.demo.responseModel.StudentListResponseModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 class FacultyRepository(private val facultyDao: FacultyDao, private val currentScope: CoroutineScope){
@@ -41,6 +39,42 @@ class FacultyRepository(private val facultyDao: FacultyDao, private val currentS
                     }
                 }
 
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
+
+    fun getDashboardData(classSession: String, studentId: String, schoolId: String) : LiveData<DashboardValueModel>{
+        currentScope.launch { getDashboardDataFromNetwork(classSession, studentId, schoolId) }
+        return facultyDao.getDashboardData()
+    }
+
+    private suspend fun getDashboardDataFromNetwork(classSession: String, studentId: String, schoolId: String){
+        try {
+            facultyApi.getDashboardData(classSession, studentId, schoolId).body()?.value?.let {
+                if (it.isNotEmpty()){
+                    facultyDao.insertDashboardData(it[0])
+                }
+            }
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
+
+    fun getStudentInClass() :LiveData<List<StudentListResponseModel>>{
+        currentScope.launch {  }
+        return facultyDao.getStudentInClass()
+    }
+
+    private suspend fun getStudentsInClassFromNetwork(){
+        try {
+            facultyApi.getStudentInClass("7b61576b-083f-e911-a963-000d3af2ca7c", "K12_PRO_002").body()?.let {
+                if (it.isNotEmpty()){
+                    facultyDao.insertStudentList(it)
+                }
+            }
         }catch (e: Exception){
             e.printStackTrace()
         }

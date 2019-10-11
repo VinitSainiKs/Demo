@@ -2,5 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:icon="@mipmap/ic_launcher_round" android:title="Daily Schedule" android:id="@id/scheduleFragment"/>
+    <item android:icon="@mipmap/ic_launcher_round" android:title="Dashboard" android:id="@id/dashboardFragment"/>
 
 </menu>
