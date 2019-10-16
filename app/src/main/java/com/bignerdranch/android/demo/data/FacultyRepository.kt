@@ -1,8 +1,10 @@
 package com.bignerdranch.android.demo.data
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.bignerdranch.android.demo.responseModel.DailyScheduleResponseModel
 import com.bignerdranch.android.demo.responseModel.DashboardValueModel
+import com.bignerdranch.android.demo.responseModel.LoginValueModel
 import com.bignerdranch.android.demo.responseModel.StudentListResponseModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -24,6 +26,29 @@ class FacultyRepository(private val facultyDao: FacultyDao, private val currentS
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build().create(FacultyAPI::class.java)
+
+    val loginApi = Retrofit.Builder()
+        .baseUrl("http://104.211.88.67:5147/SIS_Student/")
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build().create(FacultyAPI::class.java)
+
+
+
+    suspend fun loginUser(userId: String, password: String, schoolId: String, loginData: MutableLiveData<LoginValueModel?>){
+        try {
+            loginApi.loginUser(userId, password, schoolId).body()?.value?.let {
+                if (it.isNotEmpty()){
+                    loginData.value = it[0]
+                    facultyDao.insertLoginData(it[0])
+                }else{
+                    loginData.value = null
+                }
+            }
+        }catch (e: java.lang.Exception){
+            e.printStackTrace()
+        }
+    }
 
     fun getDailySchedule(contactId: String, schoolId: String): LiveData<List<DailyScheduleResponseModel>>{
         currentScope.launch { getDailyScheduleFromNetwork(contactId, schoolId) }

@@ -5,13 +5,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.bignerdranch.android.demo.responseModel.DailyScheduleResponseModel
-import com.bignerdranch.android.demo.responseModel.DashboardResponseModel
-import com.bignerdranch.android.demo.responseModel.DashboardValueModel
-import com.bignerdranch.android.demo.responseModel.StudentListResponseModel
+import com.bignerdranch.android.demo.responseModel.*
 
 @Dao
 interface FacultyDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLoginData(loginValueModel: LoginValueModel)
 
     @Query("SELECT * FROM faculty_daily_schedule")
     fun getDailySchedule(): LiveData<List<DailyScheduleResponseModel>>
